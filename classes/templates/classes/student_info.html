@@ -1,0 +1,55 @@
+{% extends 'classes/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<head><h1>
+    {{ title }}
+</h1></head>
+	<h3>
+		{{ student.first_name }} {{ student.last_name }}
+	</h3>
+	<p>
+		Grade - {{ student.grade }}
+	</p>
+	<p>
+		Birthday - {{ student.birth_date }}
+	</p>
+	<p>
+		Bio - {{ student.bio }}
+	</p>
+	<p>
+		Color - {{ student.color }}
+	</p>
+
+	<div style="width: 60%;margin: 0 auto">
+	Edit Info:
+<form action="/student/{{ student.slug }}/" method="post">
+	{% csrf_token %}
+	<div class="row">
+		<div class="col-6">
+			{{ form.first_name|as_crispy_field   }}
+		</div>
+		<div class="col-6">
+			{{ form.last_name|as_crispy_field   }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-6">
+			{{ form.birth_date|as_crispy_field   }}
+		</div>
+		<div class="col-6">
+			{{ form.age|as_crispy_field   }}
+		</div>
+		<div class="col-6">
+	    	{{ form.grade|as_crispy_field   }}
+		</div>
+		<div class="col-6">
+			{{ form.color|as_crispy_field   }}
+		</div>
+	</div>
+		{{ form.bio|as_crispy_field   }}
+		<input type="submit" value="Update">
+		</form>
+	</div>
+{% endblock content %}

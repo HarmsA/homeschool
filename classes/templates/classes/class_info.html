@@ -1,0 +1,30 @@
+{% extends 'classes/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<head><h1>
+    {{ title }}
+</h1></head>
+{{ class }}
+	{% for lesson in lessons %}
+		<p>
+			{{ lesson.title }}
+		</p>
+		<p>
+			{{ lesson.topic }}
+		</p>
+		<p>
+			{{ lesson.description }}
+		</p>
+		<p>
+{#			{{ lesson.teacher.all }}#}
+		</p>
+		<p>
+{#			{{ lesson.student.all }}#}
+		</p>
+	{% endfor %}
+{{ form }}
+
+	
+{% endblock content %}

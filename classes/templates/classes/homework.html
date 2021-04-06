@@ -1,0 +1,39 @@
+{% extends 'classes/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<head>{{ title }}</head>
+
+	<div class="card-title">
+		<h3>{{user.user.first_name}} {{user.user.last_name}}</h3>
+	</div>
+{% for homework in homework.all %}
+	<div class="card" style="display: inline-block; border: 5px solid {{ user.color }}; padding: 15px 15px 5px 0; margin: 10px">
+		<div class="card-text" style="width: 100%;text-align: center;">
+			<ul style="text-align: left">
+				<li>
+					Title/Topic: {{ homework.title|truncatechars:15 }}<br>
+				</li>
+				<li>
+					Description: {{ homework.description|truncatechars:15 }}<br>
+				</li>
+				<li>
+					Assigned: {{ homework.date_assigned }}<br>
+				</li>
+				<li>
+					{% if homework.completed %}
+						<h6>Homework Completed</h6>
+					{% else %}
+						Due: {{ homework.due_date }}<br>
+					{% endif %}
+				</li>
+			</ul>
+		    <a href="#" class="btn homework-update-btn {% if homework.complete %} btn-success{% else %}btn-danger{% endif %}">
+			    Update Homework
+		    </a>
+		</div>
+	</div>
+{% endfor %}
+
+{% endblock content %}

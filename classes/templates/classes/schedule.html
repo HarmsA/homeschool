@@ -1,0 +1,70 @@
+{% extends 'classes/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+	{{ title }}
+{% endblock title %}
+{% block content %}
+<h1>Select a week to fiew the schedule.</h1>
+	{% for week in total_weeks %}
+		<a href="{% url 'schedule' slug=week %}">{{ week }}</a>
+	{% endfor %}
+
+<div class="container">
+	<h6>Optional***</h6>
+	<div>
+{#	TODO make into a form to use jquery to organize the weeks schedule #}
+		{% for day in days %}
+			{{ day }}
+		{% endfor %}
+	</div>
+</div>
+
+{% if week_schedule %}
+<div>
+
+	<h1>Week #{{ slug }}</h1>
+	<ul>
+	{% for class in week_schedule %}
+		<li>
+{#		TODO make a popup showing a link to more detail of this lesson #}
+			{{ class.lesson.topic }}
+			<ul>
+				<li>
+					Student(s)
+					<ul>
+						{% for student in class.lesson.user_lesson.all %}
+							<li>
+{#							TODO make into a link to users detail page #}
+								{{ student.user.first_name }} {{ student.user.last_name }}
+							</li>
+						{% endfor %}
+					</ul>
+				</li>
+{#			TODO if homework assigned, show link to homework detail page #}
+				<li>
+					Homework Assigned -- {{ class.lesson.homework_description|default:"No Homework" }}
+				</li>
+				<li>
+					Required Supplies -- {{ class.lesson.required_supplies }}
+				</li>
+				<li>
+					{% for day in class.weekday.all %}
+						{{ day }}
+					{% endfor %}
+						Start time - {{ class.start }} {{ day }} Lasts -- {{ class.duration }}min
+
+				</li>
+			</ul>
+		</li>
+	{% endfor %}
+	</ul>
+
+</div>
+{% else %}
+	<h1>No classes scheduled for this week.</h1>
+{#	TODO make a link to schedule classes for this week using the {{ slug }} to link to the week #}
+	<a href="#">Schedule classes</a>
+{% endif %}
+
+{% endblock content %}
